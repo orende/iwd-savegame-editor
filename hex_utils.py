@@ -1,3 +1,12 @@
+def zeroPadHexStr(param: str):
+    lens = [2, 4, 6, 8]
+    for l in lens:
+        if len(param) < l:
+            return param.zfill(l)
+        elif len(param) == l:
+            return param
+
+
 def fromLittleEndianHex(inputVal: str) -> int:
     return int(inputVal, 16)
 
@@ -13,7 +22,7 @@ def fromBigEndianHex(inputVal: str) -> int:
 def toLittleEndianHex(inputVal: str | int) -> str:
     # assumes input is big-endian or integer
     if type(inputVal) == int:
-        inputVal = hex(inputVal)[2:]
+        inputVal = hex(inputVal)[2:]  # remove 0x prefix
     inputVal = zeroPadHexStr(inputVal)
     pairs = []
     for i in range(0, len(inputVal) - 1, 2):
@@ -21,19 +30,10 @@ def toLittleEndianHex(inputVal: str | int) -> str:
     return ''.join(pairs[::-1])
 
 
-def zeroPadHexStr(param: str):
-    lens = [2, 4, 6, 8]
-    for l in lens:
-        if len(param) < l:
-            return param.zfill(l)
-        elif len(param) == l:
-            return param
-
-
 def toBigEndianHex(inputVal: str | int) -> str:
     # assumes input is little-endian or integer
     if type(inputVal) == int:
-        inputVal = hex(inputVal)[2:]
+        inputVal = hex(inputVal)[2:]  # remove 0x prefix
     inputVal = zeroPadHexStr(inputVal)
     pairs = []
     for i in range(0, len(inputVal) - 1, 2):

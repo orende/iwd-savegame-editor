@@ -20,6 +20,10 @@ class HexUtilsTestCase(unittest.TestCase):
         result = toLittleEndianHex(1404)
         self.assertEqual("7c05", result)
 
+    def test_toLittleEndianHex_transformsEndianessCorrectlyForStringMissingLeadingZero(self):
+        result = toLittleEndianHex("57C")
+        self.assertEqual("7C05", result)
+
     def test_toBigEndianHex_transformsEndianessCorrectly(self):
         result = toBigEndianHex("057C")
         self.assertEqual("7C05", result)
