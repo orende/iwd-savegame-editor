@@ -1,10 +1,13 @@
 def zeroPadHexStr(param: str):
-    lens = [2, 4, 6, 8]
-    for l in lens:
-        if len(param) < l:
-            return param.zfill(l)
-        elif len(param) == l:
+    for size in [2, 4, 6, 8]:
+        if len(param) < size:
+            return param.zfill(size)
+        elif len(param) == size:
             return param
+
+
+def splitIntoPairsAndReverse(inputVal):
+    return [inputVal[i] + inputVal[i + 1] for i in range(0, len(inputVal), 2)][::-1]
 
 
 def fromLittleEndianHex(inputVal: str) -> int:
@@ -13,10 +16,8 @@ def fromLittleEndianHex(inputVal: str) -> int:
 
 def fromBigEndianHex(inputVal: str) -> int:
     # assumes input is big-endian hex string
-    pairs = []
-    for i in range(0, len(inputVal) - 1, 2):
-        pairs += [inputVal[i:i + 2]]
-    return int(''.join(pairs[::-1]), 16)
+    pairs = splitIntoPairsAndReverse(inputVal)
+    return int(''.join(pairs), 16)
 
 
 def toLittleEndianHex(inputVal: str | int) -> str:
@@ -24,10 +25,8 @@ def toLittleEndianHex(inputVal: str | int) -> str:
     if type(inputVal) == int:
         inputVal = hex(inputVal)[2:]  # remove 0x prefix
     inputVal = zeroPadHexStr(inputVal)
-    pairs = []
-    for i in range(0, len(inputVal) - 1, 2):
-        pairs += [inputVal[i:i + 2]]
-    return ''.join(pairs[::-1])
+    pairs = splitIntoPairsAndReverse(inputVal)
+    return ''.join(pairs)
 
 
 def toBigEndianHex(inputVal: str | int) -> str:
@@ -35,14 +34,10 @@ def toBigEndianHex(inputVal: str | int) -> str:
     if type(inputVal) == int:
         inputVal = hex(inputVal)[2:]  # remove 0x prefix
     inputVal = zeroPadHexStr(inputVal)
-    pairs = []
-    for i in range(0, len(inputVal) - 1, 2):
-        pairs += [inputVal[i:i + 2]]
-    return ''.join(pairs[::-1])
+    pairs = splitIntoPairsAndReverse(inputVal)
+    return ''.join(pairs)
 
 
 def hexStringToIntArray(inputVal: str) -> list[int]:
-    pairs = []
-    for i in range(0, len(inputVal) - 1, 2):
-        pairs += [int(inputVal[i:i + 2], 16)]
+    pairs = [int(inputVal[i]+inputVal[i+1], 16) for i in range(0, len(inputVal), 2)]
     return pairs

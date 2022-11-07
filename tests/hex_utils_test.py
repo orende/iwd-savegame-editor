@@ -1,6 +1,6 @@
 import unittest
 
-from hex_utils import fromLittleEndianHex, fromBigEndianHex, toLittleEndianHex, toBigEndianHex
+from hex_utils import fromLittleEndianHex, fromBigEndianHex, toLittleEndianHex, toBigEndianHex, hexStringToIntArray
 
 
 class HexUtilsTestCase(unittest.TestCase):
@@ -35,6 +35,10 @@ class HexUtilsTestCase(unittest.TestCase):
     def test_toBigEndianHex_transformsEndianessCorrectlyForStringMissingLeadingZero(self):
         result = toBigEndianHex("57C")
         self.assertEqual("7C05", result)
+
+    def test_hexStringToInArray_convertsStringCorrectly(self):
+        result = hexStringToIntArray("057C")
+        self.assertEqual([5, 124], result)
 
 
 if __name__ == '__main__':
